@@ -34,7 +34,14 @@ color:<?=$text_color?>;
 
 input[type="submit"]:hover {
 box-shadow:black 0 0 0.5rem;
-
+}
+input[type="submit"]:disabled{
+color:grey;
+cursor:not-allowed;
+}
+input[type="submit"]:disabled:hover{
+box-shadow:none;
+color:grey;
 }
 
 input[type="text"],input[type="number"] {
@@ -62,7 +69,16 @@ font-family:Avantgarde,sans-serif;
 
 .form_url{
 display:flex;
+flex-direction:column;
 gap:1rem;
+}
+
+@media screen and (min-width: 750px) {
+.form_url{
+display:flex;
+flex-direction:row;
+gap:1rem;
+}
 }
 
 #input_url{
@@ -88,17 +104,20 @@ width:-webkit-calc(100% - 2px);
 width:calc(100% - 2px);
 }
 
-.timer_cont{
+.toggle_cont{
 position: -webkit-sticky;
 position: sticky;
 bottom:1rem;
+}
+
+.timer_cont{
 margin-left:auto;
-background:rgba(0, 0, 0, 0.7);
-backdrop-filter: blur(1px);
+background:rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(3px);
 width:70vw;
 border-radius:0.5rem;
 padding:1rem 2rem 1rem 2rem;
-
+transition: all 0.5s;
 }
 
 input[type="number"]{
@@ -110,17 +129,19 @@ color:<?=$text_color?>;
 text-align:left;
 }
 
+.toggle_cont2{
+position:absolute;
+top:1rem;
+right:1rem;
+}
+
 .playlist_cont{
-position: -webkit-sticky;
-position: sticky;
-bottom:1rem;
-margin-left:auto;
-background:rgba(0, 0, 0, 0.7);
-backdrop-filter: blur(1px);
+background:rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(3px);
 width:30vw;
 border-radius:0.5rem;
 padding:1rem 2rem 1rem 2rem;
-
+transition: all 0.5s;
 }
 
 .playlist_el{
@@ -130,4 +151,26 @@ justify-content:end;
 
 .playlist_el_sub{
 background:rgba(0,0,0,0) !important;
+}
+
+.del_btn{
+text-align:center;
+}
+
+.toggle{
+position:absolute;
+z-index:1;
+right:1rem;
+
+}
+
+.check_toggle{
+opacity:0;
+}
+
+.toggle:checked ~ .timer_cont{
+transform: translate(95%);
+}
+.toggle:checked ~ .playlist_cont{
+transform: translate(90%);
 }
