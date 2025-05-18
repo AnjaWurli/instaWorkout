@@ -42,13 +42,19 @@
     ?>
 
 <body>
-    <h1>Player</h1>
-    <?php 
-        echo '<form method="POST" action="index.php" class="home_btn">
-                <input type="submit" value="add another..."/>
+    <header>
+        <h1>Player</h1>
+        <?php 
+        echo '<form method="POST" action="index.php" class="home_form">
+                <label for="home_btn" class="home_label">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.3284 11.0001V13.0001L7.50011 13.0001L10.7426 16.2426L9.32842 17.6568L3.67157 12L9.32842 6.34314L10.7426 7.75735L7.49988 11.0001L20.3284 11.0001Z" fill="currentColor"/>
+                    </svg>
+                </label>
+                <input type="submit" name="home_btn" value="add another..." class="home_btn"/>
                 </form>';
     ?>
-
+    </header>
 
 
     <div id="insta">
@@ -67,7 +73,7 @@
     </div>
 
     <div class="toggle_cont">
-        <label for="toggleTime" class="toggle">
+        <label for="toggleTime" class="toggle_label">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 6H11V7C11 7.55228 11.4477 8 12 8C12.5523 8 13 7.55228 13 7V6Z" fill="currentColor" />
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -75,7 +81,7 @@
                     fill="currentColor" />
             </svg>
         </label>
-        <input type="checkbox" name="toggleTime" class="toggle check_toggle" checked />
+        <input type="checkbox" name="toggleTime" class="toggle" checked />
         <div class="timer_cont">
             <h3>Timer</h3>
             <h2 id="time" hidden> </h2>
@@ -87,7 +93,7 @@
     </div>
 
     <div class="toggle_cont2">
-        <label for="togglePlaylist" class="toggle">
+        <label for="togglePlaylist" class="toggle_label">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16 5H4V7H16V5Z" fill="currentColor" />
                 <path d="M16 9H4V11H16V9Z" fill="currentColor" />
@@ -95,7 +101,7 @@
                 <path d="M20 16L14 13V19L20 16Z" fill="currentColor" />
             </svg>
         </label>
-        <input type="checkbox" name="togglePlaylist" class="toggle check_toggle" checked />
+        <input type="checkbox" name="togglePlaylist" class="toggle" checked />
         <div class="playlist_cont">
             <h3>Playlist</h3>
             <?php
@@ -103,8 +109,15 @@
             $keys=$_SESSION["reel_number"];
             for($i=0;$i<=$keys;$i++){
                $token= $_SESSION["v".$i];
-               if($token){
+               if($token===$snippet){
                echo '<li class="playlist_el">
+               <form method="POST" >
+                <input type="hidden" name="token" value="'.$token.'"/>
+                <input type="submit" name="playOther" value="video '.$i.'" class="playlist_el_sub bold"/>
+                </form>
+                </li>';
+               } else if($token){
+                echo '<li class="playlist_el">
                <form method="POST" >
                 <input type="hidden" name="token" value="'.$token.'"/>
                 <input type="submit" name="playOther" value="video '.$i.'" class="playlist_el_sub"/>

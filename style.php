@@ -9,9 +9,34 @@ font-family:sans-serif;
 color:<?=$text_color?>;
 }
 
+header{
+display:flex;
+flex-direction: row-reverse;
+width:100vw;
+justify-content: stretch;
+}
+
 h1{
 font-size:3rem;
+flex-grow:2;
 }
+
+.home_form{
+display:flex;
+align-items:center;
+}
+
+.home_btn{
+background:rgba(0,0,0,0) !important;
+text-decoration: underline;
+padding:0.2rem;
+}
+
+.home_label{
+cursor:pointer;
+height:24px;
+}
+
 
 body{
 background: #020024;
@@ -125,10 +150,6 @@ width:3rem;
 color:<?=$text_color?>;
 }
 
-.home_btn{
-text-align:left;
-}
-
 .toggle_cont2{
 position:absolute;
 top:1rem;
@@ -157,15 +178,38 @@ background:rgba(0,0,0,0) !important;
 text-align:center;
 }
 
+.toggle_label{
+position:absolute;
+z-index:1;
+right:0.2rem;
+border-radius: 1rem;
+background:rgba(0, 0, 0, 1);
+display:flex;
+padding: 0.7rem;
+border: <?=$text_color?> 2px solid;
+cursor:pointer;
+}
+
 .toggle{
 position:absolute;
 z-index:1;
-right:1rem;
-
+right:0.2rem;
+border-radius: 1rem;
+height: 3rem;
+width: 3rem;
+appearance: none;
+margin: 1px;
+padding: 2px;
 }
 
-.check_toggle{
-opacity:0;
+@media screen and (min-width: 750px) {
+.toggle, .toggle_label{
+right:1rem;
+}
+}
+
+.toggle_label:hover, .toggle:hover{
+box-shadow:rgba(255, 255, 255, 1) 0 0 0.5rem;
 }
 
 .toggle:checked ~ .timer_cont{
@@ -173,4 +217,9 @@ transform: translate(95%);
 }
 .toggle:checked ~ .playlist_cont{
 transform: translate(90%);
+}
+
+.bold{
+font-weight: bold;
+color:rgba(255, 255, 255, 1) !important;
 }
