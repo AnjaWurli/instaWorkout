@@ -13,31 +13,52 @@
     //if redirected from index.php, extract url info from POST method
     $url=htmlspecialchars($_POST["url"]);
 
-    //if no instagram url or no url given, use this token instead (fpr injecting a video)
+    $isValid=false;
+
+    //if no instagram url or no url given, use this token instead (for injecting a video)
     $snippet="DIj9VcfxDUm";
+
+    //if redirected from playlist, extract video token from POST method
+    if($_POST["token"]){
+        $snippet=$_POST["token"];
+        $isValid=true;
+    }
 
     //check if url is valid
     if (filter_var($url, FILTER_VALIDATE_URL)) {
         //extract video token from url ("https://instagram.com/reel/...*token*.../?..")
         preg_match('/reel\/([^\/\?]+)\//', $url, $matches);
-        $snippet= $matches[1];
+        
+        if($matches){
+            $snippet= $matches[1];
+            $isValid=true;
+        
+            //check if this reel already in playlist
+            $newReel=true;
+            $keys=$_SESSION["reel_number"];
+            for($i=0;$i<=$keys;$i++){
+               $toCheck= $_SESSION["v".$i];
+               if($snippet===$toCheck){
+                $newReel=false;
+               }
+            }
 
-            //store number of generated videos in this session in the session storage
-            if($_SESSION["reel_number"]){
-                $_SESSION["reel_number"]++;
+            if($newReel){
+                //store number of generated videos in this session in the session storage
+                if($_SESSION["reel_number"]){
+                    $_SESSION["reel_number"]++;
+                }
+                else {
+                    $_SESSION["reel_number"]=1;
+                }
+                //generate a key for the token to store it in the session storage too
+                $key=$_SESSION["reel_number"];
+                $_SESSION["v".strval($key)]=$snippet;
             }
-            else {
-                $_SESSION["reel_number"]=1;
-            }
-        //generate a key for the token to store it in the session storage too
-        $key=$_SESSION["reel_number"];
-        $_SESSION["v".strval($key)]=$snippet;
+        }
     } 
 
-    //if redirected from playlist, extract video token from POST method
-    if($_POST["token"]){
-        $snippet=$_POST["token"];
-    }
+    
 
     ?>
 
@@ -54,9 +75,20 @@
                 <input type="submit" name="home_btn" value="add another..." class="home_btn"/>
                 </form>';
     ?>
+
+        <?php echo '<form method="POST" >
+                <input type="hidden" name="token" value="'.$snippet.'"/>
+                <input type="submit" name="playOther" value="reload" class="playlist_el_sub"/>
+                </form>'
+                ?>
     </header>
 
-
+    <?php 
+if(!$isValid){
+    echo '<p class="alert">! This was not a valid instagram url. Please try again.<br/>
+    In the meantime I have another video example for you: </p>';
+}
+?>
     <div id="insta">
         <blockquote class="instagram-media"
             data-instgrm-permalink="https://www.instagram.com/reel/<?=$snippet?>/?utm_source=ig_embed&amp;utm_campaign=loading"
@@ -86,7 +118,9 @@
             <h3>Timer</h3>
             <h2 id="time" hidden> </h2>
             <form action="">
-                <input type="number" step="5" name="timer" id="input_timer" min="0" max="300">
+                <input type="number" step="5" name="timer" id="input_timer" min="0" max="300" placeholder="seconds">
+                <?php //TODO: add +/- buttons for mobile accessability 
+                ?>
                 <input type="submit" value="start" name="time" id="start_timer">
             </form>
         </div>

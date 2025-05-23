@@ -88,8 +88,27 @@ margin-top:5vw;
 border-radius:0.5rem;
 }
 
+.feat{
+text-align:left;
+}
+
+hr{
+border:none;
+border-top:<?=$text_color?> solid 1px;
+margin:1rem 0.5rem;
+}
+
+.foot{
+text-align:right;
+}
+
 p{
 font-family:Avantgarde,sans-serif;
+}
+
+.alert{
+text-align:left;
+color:rgb(255,255,255);
 }
 
 .form_url{
